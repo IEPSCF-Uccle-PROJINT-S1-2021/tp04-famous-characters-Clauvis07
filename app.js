@@ -10,6 +10,7 @@ const logger  = require('morgan');
 
 app.use(logger('dev'));
 
+
 app.use('/static',express.static('public'));
 
 app.get('/',(req,res)=>{
