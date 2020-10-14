@@ -4,6 +4,7 @@
 const reponse = document.querySelector('.reponse');
 const personage = document.querySelector('.personage');
 const list_perso = document.getElementById('liste_perso');
+let tab = "<table><tr><th>Nom</th><th>Prénom</th></tr>";
 
 
 reponse.addEventListener('click', resultat);
@@ -17,39 +18,36 @@ function resultat(){
   }
   else{
   personage.textContent="Chargement encours...";
+  let tableau =listePersonage;
+  console.log(tableau);
+
+  for(const elem of tableau){
+    tab += '<tr><td>elem.lastName</td><td>elem.firstName</td></tr>';
   }
-  listePersonage();
+  tab += '</table>';
+  }
+  liste_perso.textContent = tab;
 
+};
 
-}
-
-async function listePersonage(){
-
+let listePersonage = async()=>{
+  let tableau=[];
   if(document.getElementById('avengers').checked){
-    let reponse =  await fetch('avengers.json');
 
     try{
-      let resultat = await reponse.json(); //transforme le fichier json en tableau d'objet
-      if(document.getElementById('nom').checked){
-
-        let tab_perso = []
-      for(i=0; i<resultat.length; i++){
-          tab_perso.push(resultat[i]);
-
-      }
-      console.log(tab_perso);
-      list_perso.textContent= tab_perso;
-
+      let avengersList =  await fetch('avengers.json');
+          avengersList = await avengersList.json(); //transforme le fichier json en tableau d'objet
+        tableau.push(avengersList);
     }
-
-  }
    catch(e){
       console.log("probleme avec le fetch"+e.message)
     };
-    return resultat;
+
   }
+  return tableau;
+}
 
-
+/*
   if(document.getElementById('batman').checked){
     let reponse =  await fetch('batman.json');
 
@@ -78,5 +76,5 @@ async function listePersonage(){
 
     }
   }
-
+*/
 
